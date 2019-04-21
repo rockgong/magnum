@@ -57,5 +57,9 @@ add_subdirectory(MagnumExternal)
 add_subdirectory(Magnum)
 add_subdirectory(MagnumPlugins)
 
+if(WITH_PYTHON)
+    add_subdirectory(python)
+endif()
+
 # Magnum include dir for superprojects
 set(MAGNUM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "" FORCE)

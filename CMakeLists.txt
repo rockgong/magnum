@@ -156,6 +156,9 @@ if(NOT CORRADE_TARGET_ANDROID)
     option(WITH_SDL2APPLICATION "Build Sdl2Application library" OFF)
 endif()
 
+# Python bindings
+option(WITH_PYTHON "Build Python bindings" OFF)
+
 option(BUILD_DEPRECATED "Include deprecated API in the build" ON)
 if(BUILD_DEPRECATED)
     set(MAGNUM_BUILD_DEPRECATED 1)
