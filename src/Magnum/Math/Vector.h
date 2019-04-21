@@ -178,17 +178,17 @@ template<std::size_t size, class T> class Vector {
          */
         constexpr explicit Vector(ZeroInitT) noexcept: _data{} {}
 
-        /** @brief Construct vector without initializing the contents */
+        /** @brief Construct a vector without initializing the contents */
         explicit Vector(NoInitT) noexcept {}
 
-        /** @brief Construct vector from components */
+        /** @brief Construct a vector from components */
         #ifdef DOXYGEN_GENERATING_OUTPUT
         template<class ...U> constexpr /*implicit*/ Vector(T first, U... next) noexcept;
         #else
         template<class ...U, class V = typename std::enable_if<sizeof...(U)+1 == size, T>::type> constexpr /*implicit*/ Vector(T first, U... next) noexcept: _data{first, next...} {}
         #endif
 
-        /** @brief Construct vector with one value for all components */
+        /** @brief Construct a vector with one value for all components */
         #ifdef DOXYGEN_GENERATING_OUTPUT
         constexpr explicit Vector(T value) noexcept;
         #else
@@ -196,7 +196,7 @@ template<std::size_t size, class T> class Vector {
         #endif
 
         /**
-         * @brief Construct vector from another of different type
+         * @brief Construct a vector from another of different type
          *
          * Performs only default casting on the values, no rounding or
          * anything else. Example usage:
@@ -205,13 +205,13 @@ template<std::size_t size, class T> class Vector {
          */
         template<class U> constexpr explicit Vector(const Vector<size, U>& other) noexcept: Vector(typename Implementation::GenerateSequence<size>::Type(), other) {}
 
-        /** @brief Construct vector from external representation */
+        /** @brief Construct a vector from external representation */
         template<class U, class V = decltype(Implementation::VectorConverter<size, T, U>::from(std::declval<U>()))> constexpr explicit Vector(const U& other) noexcept: Vector(Implementation::VectorConverter<size, T, U>::from(other)) {}
 
         /** @brief Copy constructor */
         constexpr /*implicit*/ Vector(const Vector<size, T>&) noexcept = default;
 
-        /** @brief Convert vector to external representation */
+        /** @brief Convert a vector to external representation */
         template<class U, class V = decltype(Implementation::VectorConverter<size, T, U>::to(std::declval<Vector<size, T>>()))> constexpr explicit operator U() const {
             return Implementation::VectorConverter<size, T, U>::to(*this);
         }
@@ -247,28 +247,28 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Component-wise less than
+         * @brief Component-wise less than comparison
          *
          * @m_keyword{lessThan(),GLSL lessThan(),}
          */
         BoolVector<size> operator<(const Vector<size, T>& other) const;
 
         /**
-         * @brief Component-wise less than or equal
+         * @brief Component-wise less than or equal comparison
          *
          * @m_keyword{lessThanEqual(),GLSL lessThanEqual(),}
          */
         BoolVector<size> operator<=(const Vector<size, T>& other) const;
 
         /**
-         * @brief Component-wise greater than or equal
+         * @brief Component-wise greater than or equal comparison
          *
          * @m_keyword{greaterThanEqual(),GLSL greaterThanEqual(),}
          */
         BoolVector<size> operator>=(const Vector<size, T>& other) const;
 
         /**
-         * @brief Component-wise greater than
+         * @brief Component-wise greater than comparison
          *
          * @m_keyword{greaterThan(),GLSL greaterThan(),}
          */
@@ -309,7 +309,7 @@ template<std::size_t size, class T> class Vector {
         Vector<size, T> operator-() const;
 
         /**
-         * @brief Add and assign vector
+         * @brief Add and assign a vector
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = \boldsymbol a_i + \boldsymbol b_i
@@ -323,7 +323,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Add vector
+         * @brief Add a vector
          *
          * @see @ref operator+=(), @ref sum()
          */
@@ -332,7 +332,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Subtract and assign vector
+         * @brief Subtract and assign a vector
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = \boldsymbol a_i - \boldsymbol b_i
@@ -346,7 +346,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Subtract vector
+         * @brief Subtract a vector
          *
          * @see @ref operator-=()
          */
@@ -355,7 +355,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Multiply vector with number and assign
+         * @brief Multiply with a number and assign
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = b \boldsymbol a_i
@@ -371,7 +371,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Multiply vector with number
+         * @brief Multiply with a number
          *
          * @see @ref operator*(const Vector<size, T>&) const,
          *      @ref operator*=(T), @ref operator*(T, const Vector<size, T>&),
@@ -382,7 +382,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Divide vector with number and assign
+         * @brief Divide with a number and assign
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = \frac{\boldsymbol a_i} b
@@ -398,7 +398,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Divide vector with number
+         * @brief Divide with a number
          *
          * @see @ref operator/(const Vector<size, T>&) const,
          *      @ref operator/=(T), @ref operator/(T, const Vector<size, T>&),
@@ -409,7 +409,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Multiply vector component-wise and assign
+         * @brief Multiply a vector component-wise and assign
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = \boldsymbol a_i \boldsymbol b_i
@@ -425,7 +425,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Multiply vector component-wise
+         * @brief Multiply a vector component-wise
          *
          * @see @ref operator*(T) const, @ref operator*=(const Vector<size, T>&),
          *      @ref operator*(const Vector<size, Integral>&, const Vector<size, FloatingPoint>&),
@@ -436,7 +436,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Divide vector component-wise and assign
+         * @brief Divide a vector component-wise and assign
          *
          * The computation is done in-place. @f[
          *      \boldsymbol a_i = \frac{\boldsymbol a_i}{\boldsymbol b_i}
@@ -452,7 +452,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Divide vector component-wise
+         * @brief Divide a vector component-wise
          *
          * @see @ref operator/(T) const, @ref operator/=(const Vector<size, T>&),
          *      @ref operator/(const Vector<size, Integral>&, const Vector<size, FloatingPoint>&)
@@ -537,7 +537,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Vector projected onto line
+         * @brief Vector projected onto a line
          *
          * Returns a vector projected onto @p line. Enabled only for
          * floating-point types. @f[
@@ -555,7 +555,7 @@ template<std::size_t size, class T> class Vector {
         }
 
         /**
-         * @brief Vector projected onto normalized line
+         * @brief Vector projected onto a normalized line
          *
          * Slightly faster alternative to @ref projected(), expects @p line to
          * be normalized. Enabled only for floating-point types. @f[
@@ -649,7 +649,7 @@ template<std::size_t size, class T> class Vector {
 };
 
 /** @relates Vector
-@brief Multiply number with vector
+@brief Multiply a number with a vector
 
 Same as @ref Vector::operator*(T) const.
 */
@@ -665,7 +665,7 @@ template<std::size_t size, class T> inline Vector<size, T> operator*(
 }
 
 /** @relates Vector
-@brief Divide vector with number and invert
+@brief Divide a vector with a number and invert
 
 @f[
     \boldsymbol c_i = \frac b {\boldsymbol a_i}
@@ -689,7 +689,7 @@ template<std::size_t size, class T> inline Vector<size, T> operator/(
 }
 
 /** @relates Vector
-@brief Do modulo of integral vector and assign
+@brief Do modulo of an integral vector and assign
 
 The computation is done in-place.
 */
@@ -707,7 +707,7 @@ operator%=(Vector<size, Integral>& a, Integral b) {
 }
 
 /** @relates Vector
-@brief Modulo of integral vector
+@brief Modulo of an integral vector
 */
 template<std::size_t size, class Integral> inline
 #ifdef DOXYGEN_GENERATING_OUTPUT
@@ -753,7 +753,7 @@ operator%(const Vector<size, Integral>& a, const Vector<size, Integral>& b) {
 }
 
 /** @relates Vector
-@brief Bitwise NOT of integral vector
+@brief Bitwise NOT of an integral vector
 */
 template<std::size_t size, class Integral> inline
 #ifdef DOXYGEN_GENERATING_OUTPUT
@@ -867,7 +867,7 @@ operator^(const Vector<size, Integral>& a, const Vector<size, Integral>& b) {
 }
 
 /** @relates Vector
-@brief Do bitwise left shift of integral vector and assign
+@brief Do bitwise left shift of an integral vector and assign
 
 The computation is done in-place.
 */
@@ -892,7 +892,7 @@ operator<<=(Vector<size, Integral>& vector,
 }
 
 /** @relates Vector
-@brief Bitwise left shift of integral vector
+@brief Bitwise left shift of an integral vector
 */
 template<std::size_t size, class Integral> inline
 #ifdef DOXYGEN_GENERATING_OUTPUT
@@ -913,7 +913,7 @@ operator<<(const Vector<size, Integral>& vector,
 }
 
 /** @relates Vector
-@brief Do bitwise right shift of integral vector and assign
+@brief Do bitwise right shift of an integral vector and assign
 
 The computation is done in-place.
 */
@@ -937,7 +937,7 @@ operator>>=(Vector<size, Integral>& vector,
 }
 
 /** @relates Vector
-@brief Bitwise left shift of integral vector
+@brief Bitwise left shift of an integral vector
 */
 template<std::size_t size, class Integral> inline
 #ifdef DOXYGEN_GENERATING_OUTPUT
@@ -957,7 +957,7 @@ operator>>(const Vector<size, Integral>& vector,
 }
 
 /** @relates Vector
-@brief Multiply integral vector with floating-point number and assign
+@brief Multiply an integral vector with a floating-point number and assign
 
 Similar to @ref Vector::operator*=(T), except that the multiplication is done
 in floating-point. The computation is done in-place.
@@ -976,7 +976,7 @@ operator*=(Vector<size, Integral>& vector, FloatingPoint number) {
 }
 
 /** @relates Vector
-@brief Multiply integral vector with floating-point number
+@brief Multiply an integral vector with a floating-point number
 
 Similar to @ref Vector::operator*(T) const, except that the multiplication is
 done in floating-point.
@@ -993,7 +993,7 @@ operator*(const Vector<size, Integral>& vector, FloatingPoint number) {
 }
 
 /** @relates Vector
-@brief Multiply floating-point number with integral vector
+@brief Multiply a floating-point number with an integral vector
 
 Same as @ref operator*(const Vector<size, Integral>&, FloatingPoint).
 */
@@ -1008,7 +1008,7 @@ operator*(FloatingPoint number, const Vector<size, Integral>& vector) {
 }
 
 /** @relates Vector
-@brief Divide integral vector with floating-point number and assign
+@brief Divide an integral vector with a floating-point number and assign
 
 Similar to @ref Vector::operator/=(T), except that the division is done in
 floating-point. The computation is done in-place.
@@ -1027,7 +1027,7 @@ operator/=(Vector<size, Integral>& vector, FloatingPoint number) {
 }
 
 /** @relates Vector
-@brief Divide integral vector with floating-point number
+@brief Divide an integral vector with a floating-point number
 
 Similar to @ref Vector::operator/(T) const, except that the division is done in
 floating-point.
@@ -1044,7 +1044,7 @@ operator/(const Vector<size, Integral>& vector, FloatingPoint number) {
 }
 
 /** @relates Vector
-@brief Multiply integral vector with floating-point vector component-wise and assign
+@brief Multiply an integral vector with a floating-point vector component-wise and assign
 
 Similar to @ref Vector::operator*=(const Vector<size, T>&), except that the
 multiplication is done in floating-point. The computation is done in-place.
@@ -1063,7 +1063,7 @@ operator*=(Vector<size, Integral>& a, const Vector<size, FloatingPoint>& b) {
 }
 
 /** @relates Vector
-@brief Multiply integral vector with floating-point vector component-wise
+@brief Multiply an integral vector with a floating-point vector component-wise
 
 Similar to @ref Vector::operator*(const Vector<size, T>&) const, except that
 the multiplication is done in floating-point. The result is always integral
@@ -1082,7 +1082,7 @@ operator*(const Vector<size, Integral>& a, const Vector<size, FloatingPoint>& b)
 }
 
 /** @relates Vector
-@brief Multiply floating-point vector with integral vector component-wise
+@brief Multiply a floating-point vector with an integral vector component-wise
 
 Same as @ref operator*(const Vector<size, Integral>&, const Vector<size, FloatingPoint>&).
 */
@@ -1097,7 +1097,7 @@ operator*(const Vector<size, FloatingPoint>& a, const Vector<size, Integral>& b)
 }
 
 /** @relates Vector
-@brief Divide integral vector with floating-point vector component-wise and assign
+@brief Divide an integral vector with a floating-point vector component-wise and assign
 
 Similar to @ref Vector::operator/=(const Vector<size, T>&), except that the
 division is done in floating-point. The computation is done in-place.
@@ -1116,7 +1116,7 @@ operator/=(Vector<size, Integral>& a, const Vector<size, FloatingPoint>& b) {
 }
 
 /** @relates Vector
-@brief Divide integral vector with floating-point vector component-wise
+@brief Divide an integral vector with a floating-point vector component-wise
 
 Similar to @ref Vector::operator/(const Vector<size, T>&) const, except that
 the division is done in floating-point. The result is always integral vector,
