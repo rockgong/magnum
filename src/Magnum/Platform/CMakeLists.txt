@@ -243,6 +243,11 @@ if(WITH_SDL2APPLICATION)
     set_target_properties(MagnumSdl2Application PROPERTIES
         DEBUG_POSTFIX "-d"
         FOLDER "Magnum/Platform")
+    if(NOT BUILD_STATIC OR BUILD_STATIC_PIC)
+        # TODO: do this for all others
+        # Needed by python bindings
+        set_target_properties(MagnumSdl2Application PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    endif()
     # Assuming that PIC is not needed because the Application lib is always
     # linked to the executable and not to any intermediate shared lib
     # TODO: use MagnumPlatformObjects instead of ${MagnumPlatform_*} when
