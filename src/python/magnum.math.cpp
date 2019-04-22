@@ -147,6 +147,21 @@ template<class T> void boolVector(py::class_<T>& c) {
     c.attr("SIZE") = int(T::Size);
 }
 
+/* Constants are not constructible, have to use a mock instead */
+template<class T> struct ConstantsMock {};
+template<class T> void constants(py::class_<ConstantsMock<T>>& c) {
+    c.attr("PI") = Math::Constants<T>::pi();
+    c.attr("PI_HALF") = Math::Constants<T>::piHalf();
+    c.attr("PI_QUARTER") = Math::Constants<T>::piQuarter();
+    c.attr("TAU") = Math::Constants<T>::tau();
+    c.attr("E") = Math::Constants<T>::e();
+    c.attr("SQRT2") = Math::Constants<T>::sqrt2();
+    c.attr("SQRT3") = Math::Constants<T>::sqrt3();
+    c.attr("SQRT_HALF") = Math::Constants<T>::sqrtHalf();
+    c.attr("NAN") = Math::Constants<T>::nan();
+    c.attr("INF") = Math::Constants<T>::inf();
+}
+
 }
 
 void math(py::module& root, py::module&& m) {
@@ -182,4 +197,10 @@ void math(py::module& root, py::module&& m) {
     boolVector(boolVector2);
     boolVector(boolVector3);
     boolVector(boolVector4);
+
+    /* Constants */
+    py::class_<ConstantsMock<Float>> constants_{root, "Constants", "Float numeric constants"};
+    py::class_<ConstantsMock<Double>> constantsd{root, "Constantsd", "Double numeric constants"};
+    constants(constants_);
+    constants(constantsd);
 }

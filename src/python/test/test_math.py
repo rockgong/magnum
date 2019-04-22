@@ -37,7 +37,7 @@ class Angle(unittest.TestCase):
         self.assertEqual(c, Degd(90.0))
 
     def test_conversion(self):
-        self.assertEqual(Rad(Deg(90.0)), Rad(1.570796326794896))
+        self.assertEqual(Rad(Deg(90.0)), Rad(Constants.PI_HALF))
 
     def test_ops(self):
         self.assertEqual(Deg(90.0)/2.0, Deg(45.0))
@@ -70,3 +70,8 @@ class BoolVector(unittest.TestCase):
 
     def test_repr(self):
         self.assertEqual(repr(BoolVector4(0b0101)), 'BoolVector(0101)')
+
+class Constants_(unittest.TestCase):
+    def test(self):
+        self.assertAlmostEqual(Constants.SQRT2**2, 2.0, 6)
+        self.assertAlmostEqual(Constantsd.SQRT3**2, 3.0)
